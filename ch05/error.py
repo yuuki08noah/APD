@@ -9,3 +9,9 @@ def get_one(task: str):
     if task != 'todo':
         raise Missing("없어")
     return "정상 동작"
+
+def web():
+    try:
+        result = get_one("choi")
+    except Missing:
+        print("MSISIGN")
