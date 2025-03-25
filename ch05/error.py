@@ -13,5 +13,5 @@ def get_one(task: str):
 def web():
     try:
         result = get_one("choi")
-    except Missing:
-        print("MSISIGN")
+    except Missing as e:
+        print("MSISIGN" + e.message)
