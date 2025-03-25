@@ -23,3 +23,7 @@ def create(todo: Todo) -> TodoResponse:
 @router.delete("/")
 def delete(todo: Todo) -> bool:
     return service.delete(todo)
+
+@router.patch("/")
+def patch(todo: Todo) -> TodoResponse:
+    return service.patch(todo)

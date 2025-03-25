@@ -16,3 +16,6 @@ def create(todo: Todo) -> TodoResponse:
 
 def delete(todo: Todo) -> bool:
     return data.delete(todo)
+
+def patch(todo: Todo) -> TodoResponse:
+    return data.patch(todo)

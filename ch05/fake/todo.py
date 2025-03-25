@@ -40,8 +40,13 @@ def create(todo: Todo) -> TodoResponse:
     return _todos[todo_id]
 
 def delete(todo: Todo) -> bool:
-    for to in _todos:
-        if to.task == todo.task:
-            _todos.remove(to)
-            return True
+    _todo = get_one(todo)
+    if _todo is not None:
+        _todos.remove(_todo)
     return False
+
+def patch(todo: Todo) -> TodoResponse:
+    _todo = get_one(todo)
+    if _todo is not None:
+        _todo.completed = 1
+        return _todo
