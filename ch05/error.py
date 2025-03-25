@@ -15,3 +15,6 @@ def web():
         result = get_one("choi")
     except Missing as e:
         print("MSISIGN" + e.message)
+
+if __name__ == '__main__':
+    web()
