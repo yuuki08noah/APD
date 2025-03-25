@@ -1,6 +1,7 @@
 from datetime import datetime
 from typing import List
 
+from ch05.error import Missing, Duplicate
 from ch05.model.todo import TodoResponse, Todo
 
 _todos = [
@@ -25,13 +26,16 @@ def get_all() -> List[TodoResponse]:
     return _todos
 
 def get_one(todo: Todo) -> TodoResponse:
-    # 예외 처리 필요
+    # 예외 처리 필요: Missing
     _todo = next((x for x in _todos if x.task == todo.task), None)
-
-    return _todo
+    if _todo is not None:
+        return _todo
+    raise Missing("없다")
 
 def create(todo: Todo) -> TodoResponse:
-    # 예외 처리 필요
+    # 예외 처리 필요:
+    if get_one(todo) is not None:
+        raise Duplicate("있다")
     global todo_id
     todo_id += 1
     _todos.append(TodoResponse(
@@ -43,15 +47,17 @@ def create(todo: Todo) -> TodoResponse:
     return _todos[todo_id]
 
 def delete(todo: Todo) -> bool:
-    # 예외 처리 필요
+    # 예외 처리 필요: Missing
     _todo = get_one(todo)
     if _todo is not None:
         _todos.remove(_todo)
-    return False
+        return True
+    raise Missing("없다")
 
 def patch(todo: Todo) -> TodoResponse:
-    # 예외 처리 필요
+    # 예외 처리 필요: Missing
     _todo = get_one(todo)
     if _todo is not None:
         _todo.completed = not _todo.completed
         return _todo
+    raise Missing("없다")
