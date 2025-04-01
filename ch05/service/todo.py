@@ -2,7 +2,7 @@
 from typing import List
 
 from ch05.fake import todo as data
-from ch05.model.todo import TodoResponse, Todo
+from ch05.model.todo import TodoResponse, Todo, TodoCreate
 
 
 def get_all() -> List[TodoResponse]:
@@ -11,7 +11,7 @@ def get_all() -> List[TodoResponse]:
 def get_one(todo: Todo) -> TodoResponse:
     return data.get_one(todo)
 
-def create(todo: Todo) -> TodoResponse:
+def create(todo: TodoCreate) -> TodoResponse:
     return data.create(todo)
 
 def delete(todo: Todo) -> bool:

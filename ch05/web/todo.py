@@ -5,7 +5,7 @@ from fastapi import APIRouter, HTTPException
 
 from ch05.error import Missing, Duplicate
 from ch05.service import todo as service
-from ch05.model.todo import TodoResponse, Todo
+from ch05.model.todo import TodoResponse, Todo, TodoCreate
 
 router = APIRouter(prefix="/todo")
 
@@ -13,21 +13,22 @@ router = APIRouter(prefix="/todo")
 def get_all() -> List[TodoResponse]:
     return service.get_all()
 
-@router.get("/{task}")
-def get_one(task: str) -> TodoResponse:
-    try: return service.get_one(Todo(task=task))
+@router.get("/{todo_id}")
+def get_one(todo_id: str) -> TodoResponse:
+    try: return service.get_one(Todo(todo_id=todo_id))
     except Missing as e:
         raise HTTPException(status_code=404, detail=e.message)
 
 @router.post("/")
-def create(todo: Todo) -> TodoResponse:
+def create(todo: TodoCreate) -> TodoResponse:
     try: return service.create(todo)
     except Duplicate as e:
         raise HTTPException(status_code=409, detail=e.message)
 
 @router.delete("/")
 def delete(todo: Todo) -> bool:
-    try: return service.delete(todo)
+    try:
+        return service.delete(todo)
     except Missing as e:
         raise HTTPException(status_code=404, detail=e.message)
 
